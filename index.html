@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot Q&A</title>
+</head>
+<body>
+  <h1>Ask Copilot</h1>
+  <textarea id="question" rows="4" cols="50" placeholder="Type your question here..."></textarea>
+  <button onclick="askCopilot()">Submit</button>
+  <h2>Response:</h2>
+  <p id="response"></p>
+
+  <script>
+    async function askCopilot() {
+      const question = document.getElementById('question').value;
+      const responseElement = document.getElementById('response');
+
+      const response = await fetch('/ask-copilot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await response.json();
+      responseElement.textContent = data.answer;
+    }
+  </script>
+</body>
+</html>
